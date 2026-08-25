@@ -2,39 +2,36 @@
 
 ## Where I Am
 
-- Phase: 1 — Local Data Setup & Clean Architecture
-- Current topic: Business Logic Use Cases (Result/Failure integration)
-- Last thing I did: Hardened Phase 0 — localization (AR/EN), sealed Failure/Result types,
-  AppTheme (#2E7D32), app constants, TransactionType enum, README + MIT license,
-  all committed as 6 atomic commits
+- Phase: 1 — Clean Architecture (transactions feature end-to-end)
+- Current topic: Use Cases (Interactors) — one class, one job
+- Last thing I did: Finished Phase 0 (localization AR/EN, core scaffolding, README, LICENSE) and completed the repository layer for transactions
 
 ## What I Built So Far
 
-- [x] Phase 0 — Complete (l10n infra, core error/theme/utils scaffolding, README, LICENSE)
-- [x] Configured core type-safe relational Drift schema
-- [x] Built pure TransactionEntity domain class
+- [x] Phase 0 — Project Setup complete (feature-first structure, pubspec packages, DI engine, professional README, MIT LICENSE)
+- [x] Localization infrastructure — app_en.arb + app_ar.arb with generated AppLocalizations classes
+- [x] Core scaffolding — sealed Failure hierarchy, Result<T> type, light/dark theme (#2E7D32), app constants, TransactionType enum
+- [x] Configured core type-safe relational Drift schema (Transactions table)
+- [x] Built pure TransactionEntity domain class (Equatable)
 - [x] Exposed abstract TransactionRepository contract boundary
-- [x] Implemented concrete TransactionRepositoryImpl running background-isolate mappings
-- [ ] Refactor `type` field from raw String → TransactionType enum (entity + DB + repo)
-- [ ] Wrap repository/use-case boundaries in Result<T> with Failure mapping
-- [ ] Business logic Use Cases (Next Target)
+- [x] Implemented concrete TransactionRepositoryImpl registered via @LazySingleton(as: TransactionRepository)
+- [ ] Refactor transaction type from raw String → TransactionType enum across entity, DB column, and repository
+- [ ] Wire Result<T> / Failure into repository boundaries so Use Cases never see raw exceptions
+- [ ] Business logic Use Cases — GetTransactionsUseCase, AddTransactionUseCase, DeleteTransactionUseCase (Next Target)
+- [ ] GitHub Actions CI workflow (deferred from Phase 0)
 
 ## Current File I'm Working On
 
-lib/features/transactions/domain/usecases/ — to be created;
-last touched: lib/features/transactions/data/repositories/transaction_repository_impl.dart
+lib/features/transactions/domain/usecases/get_transactions_usecase.dart (about to create)
 
 ## My Last Question
 
-ok, i want update with same style
+what comes after the repository pattern?
 
 ## What I Was Told
 
-Session state verified against the codebase; instructed to record reality in the same
-style and fold the String→TransactionType refactor into the Use Cases task so use cases
-consume the enum from day one.
+Per the roadmap Phase 1 application plan: complete the transactions feature chain — Entity → Repository contract → RepositoryImpl → GetTransactions/AddTransaction/DeleteTransaction Use Cases — respecting the dependency rule (inner layers never know outer layers), then stop at the architecture skeleton with no UI yet.
 
 ## What I'm Trying to Do Right Now
 
-Starting Phase 1 Use Cases: refactor type to TransactionType, map repository errors to
-Failure via Result<T>, then implement AddTransaction / GetTransactions / DeleteTransaction.
+Building the three Use Cases with constructor-injected TransactionRepository, returning Result<T> mapped from Failure types, and registering them in the injectable graph.
