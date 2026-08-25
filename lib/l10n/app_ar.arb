@@ -1,0 +1,44 @@
+{
+  "@@locale": "ar",
+
+  "appTitle": "مصروفي",
+  "dashboard": "الرئيسية",
+  "transactions": "المعاملات",
+  "analytics": "التحليلات",
+  "settings": "الإعدادات",
+  "quickAdd": "إضافة سريعة",
+
+  "income": "دخل",
+  "expense": "مصروف",
+  "balance": "الرصيد",
+  "totalIncome": "إجمالي الدخل",
+  "totalExpense": "إجمالي المصروفات",
+
+  "noTransactions": "لا توجد معاملات بعد",
+  "addTransaction": "إضافة معاملة",
+  "deleteTransaction": "حذف المعاملة",
+  "confirmDelete": "هل أنت متأكد من حذف هذه المعاملة؟",
+
+  "cancel": "إلغاء",
+  "delete": "حذف",
+  "save": "حفظ",
+
+  "amount": "المبلغ",
+  "category": "الفئة",
+  "description": "الوصف",
+  "date": "التاريخ",
+
+  "language": "اللغة",
+  "currency": "العملة",
+  "darkMode": "الوضع الداكن",
+
+  "search": "بحث",
+  "filter": "تصفية",
+  "monthly": "شهري",
+  "weekly": "أسبوعي",
+
+  "typeMessage": "اكتب مصروفك...",
+  "transactionSaved": "تم حفظ المعاملة!",
+  "transactionDeleted": "تم حذف المعاملة",
+  "errorOccurred": "حدث خطأ ما"
+}

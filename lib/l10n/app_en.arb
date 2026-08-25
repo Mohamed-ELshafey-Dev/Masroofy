@@ -1,0 +1,102 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Masroofy",
+  "@appTitle": { "description": "App name shown in the app bar and title" },
+
+  "dashboard": "Dashboard",
+  "@dashboard": { "description": "Bottom nav label for dashboard screen" },
+
+  "transactions": "Transactions",
+  "@transactions": { "description": "Bottom nav label for transactions screen" },
+
+  "analytics": "Analytics",
+  "@analytics": { "description": "Bottom nav label for analytics screen" },
+
+  "settings": "Settings",
+  "@settings": { "description": "Bottom nav label for settings screen" },
+
+  "quickAdd": "Quick Add",
+  "@quickAdd": { "description": "Label for the quick add FAB or screen" },
+
+  "income": "Income",
+  "@income": { "description": "Label for income transaction type" },
+
+  "expense": "Expense",
+  "@expense": { "description": "Label for expense transaction type" },
+
+  "balance": "Balance",
+  "@balance": { "description": "Label for current balance display" },
+
+  "totalIncome": "Total Income",
+  "@totalIncome": { "description": "Label for total income summary" },
+
+  "totalExpense": "Total Expense",
+  "@totalExpense": { "description": "Label for total expense summary" },
+
+  "noTransactions": "No transactions yet",
+  "@noTransactions": { "description": "Empty state message when no transactions exist" },
+
+  "addTransaction": "Add Transaction",
+  "@addTransaction": { "description": "Button label to add a new transaction" },
+
+  "deleteTransaction": "Delete Transaction",
+  "@deleteTransaction": { "description": "Button or action label to delete a transaction" },
+
+  "confirmDelete": "Are you sure you want to delete this transaction?",
+  "@confirmDelete": { "description": "Confirmation dialog message for deletion" },
+
+  "cancel": "Cancel",
+  "@cancel": { "description": "Generic cancel button label" },
+
+  "delete": "Delete",
+  "@delete": { "description": "Generic delete button label" },
+
+  "save": "Save",
+  "@save": { "description": "Generic save button label" },
+
+  "amount": "Amount",
+  "@amount": { "description": "Label for transaction amount input field" },
+
+  "category": "Category",
+  "@category": { "description": "Label for transaction category field" },
+
+  "description": "Description",
+  "@description": { "description": "Label for transaction description field" },
+
+  "date": "Date",
+  "@date": { "description": "Label for transaction date field" },
+
+  "language": "Language",
+  "@language": { "description": "Settings label for language toggle" },
+
+  "currency": "Currency",
+  "@currency": { "description": "Settings label for currency selector" },
+
+  "darkMode": "Dark Mode",
+  "@darkMode": { "description": "Settings label for dark/light mode toggle" },
+
+  "search": "Search",
+  "@search": { "description": "Search bar placeholder" },
+
+  "filter": "Filter",
+  "@filter": { "description": "Filter button label" },
+
+  "monthly": "Monthly",
+  "@monthly": { "description": "Label for monthly analytics view" },
+
+  "weekly": "Weekly",
+  "@weekly": { "description": "Label for weekly analytics view" },
+
+  "typeMessage": "Type your expense...",
+  "@typeMessage": { "description": "Placeholder for the chat-style quick add input" },
+
+  "transactionSaved": "Transaction saved!",
+  "@transactionSaved": { "description": "Snackbar message after saving a transaction" },
+
+  "transactionDeleted": "Transaction deleted",
+  "@transactionDeleted": { "description": "Snackbar message after deleting a transaction" },
+
+  "errorOccurred": "Something went wrong",
+  "@errorOccurred": { "description": "Generic error message" }
+}
