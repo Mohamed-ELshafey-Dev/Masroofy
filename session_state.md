@@ -10,7 +10,7 @@
 
 - [x] Phase 0 — Project Setup complete (feature-first structure, pubspec packages, DI engine, professional README, MIT LICENSE)
 - [x] Localization infrastructure — app_en.arb + app_ar.arb with generated AppLocalizations classes
-- [x] Core scaffolding — sealed Failure hierarchy, Result<T> type, light/dark theme (#2E7D32), app constants, TransactionType enum
+- [x] Core scaffolding — sealed Failure hierarchy, Result<T> type, light/dark theme (#0066cc), app constants, TransactionType enum
 - [x] Configured core type-safe relational Drift schema (Transactions table)
 - [x] Built pure TransactionEntity domain class (Equatable, TransactionType enum)
 - [x] Exposed abstract TransactionRepository contract boundary
