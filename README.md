@@ -1,4 +1,4 @@
-# مصروفي — Masroofy
+# Masroofy - مصروفي
 
 > **Your personal finance tracker, powered by AI.**  
 > Bilingual (Arabic + English) • Chat-style input • 100% offline
