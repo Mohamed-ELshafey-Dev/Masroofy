@@ -18,6 +18,14 @@ abstract class TransactionRepository {
   /// Updates the existing transaction identified by `transaction.id`.
   Future<Result<void>> updateTransaction(TransactionEntity transaction);
 
+  /// Emits the full transaction list on every database change, newest first.
+  ///
+  /// WHY `Stream<Result<...>>` and not a plain stream: a stream lives longer
+  /// than any single try/catch, so its failures arrive as events. Wrapping each
+  /// emission keeps the same contract every other method has, and the Cubit can
+  /// still exhaustively `switch` instead of using `onError`.
+  Stream<Result<List<TransactionEntity>>> watchTransactions();
+
   /// Deletes the transaction identified by [id].
   Future<Result<void>> deleteTransaction(int id);
 }

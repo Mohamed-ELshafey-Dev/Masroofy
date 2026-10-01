@@ -17,35 +17,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
   @override
   Future<Result<List<TransactionEntity>>> getAllTransactions() async {
     try {
-      final List<Transaction> rows = await _db.select(_db.transactions).get();
-
-      final entities = <TransactionEntity>[];
-      for (final row in rows) {
-        final type = TransactionType.tryFromString(row.type);
-        if (type == null) {
-          // Bad data is not a database outage — report it as its own failure so
-          // the UI can tell "retry" apart from "your data is broken".
-          return Failed(
-            UnexpectedFailure(
-              'Transaction ${row.id} has an unknown type "${row.type}"',
-              stackTrace: StackTrace.current,
-            ),
-          );
-        }
-        entities.add(
-          TransactionEntity(
-            id: row.id,
-            amount: row.amount,
-            description: row.description,
-            category: row.category,
-            type: type,
-            date: row.date,
-            rawAiInput: row.rawAiInput,
-          ),
-        );
-      }
-
-      return Success(entities);
+      final rows = await _db.select(_db.transactions).get();
+      return _toResult(rows);
     } catch (e, s) {
       return Failed(
         DatabaseFailure('Failed to load transactions', stackTrace: s),
@@ -119,6 +92,27 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
+  Stream<Result<List<TransactionEntity>>> watchTransactions() async* {
+    try {
+      // Drift applies ordering on the statement itself, not as a parameter to
+      // watch() — so build the ordered query first, then subscribe.
+      final query = _db.select(_db.transactions)
+        ..orderBy([(t) => OrderingTerm.desc(t.date)]);
+
+      await for (final rows in query.watch()) {
+        yield _toResult(rows);
+      }
+    } catch (e, s) {
+      // A stream outlives any single try/catch, so errors surface as events —
+      // hand them to the consumer as a failed emission instead of killing the
+      // subscription silently.
+      yield Failed(
+        DatabaseFailure('Failed to stream transactions', stackTrace: s),
+      );
+    }
+  }
+
+  @override
   Future<Result<void>> deleteTransaction(int id) async {
     try {
       await (_db.delete(_db.transactions)..where((t) => t.id.equals(id))).go();
@@ -128,5 +122,40 @@ class TransactionRepositoryImpl implements TransactionRepository {
         DatabaseFailure('Failed to delete transaction $id', stackTrace: s),
       );
     }
+  }
+
+  /// Maps raw rows into entities, or reports the first unusable row.
+  ///
+  /// WHY shared by [getAllTransactions] and [watchTransactions]: two copies of
+  /// this mapping would drift apart, and one of them would eventually start
+  /// skipping rows it could not parse — showing a balance that silently omits
+  /// transactions. Unknown values are surfaced as [UnexpectedFailure] instead.
+  Result<List<TransactionEntity>> _toResult(List<Transaction> rows) {
+    final entities = <TransactionEntity>[];
+    for (final row in rows) {
+      final type = TransactionType.tryFromString(row.type);
+      if (type == null) {
+        // Bad data is not a database outage — report it as its own failure so
+        // the UI can tell "retry" apart from "your data is broken".
+        return Failed(
+          UnexpectedFailure(
+            'Transaction ${row.id} has an unknown type "${row.type}"',
+            stackTrace: StackTrace.current,
+          ),
+        );
+      }
+      entities.add(
+        TransactionEntity(
+          id: row.id,
+          amount: row.amount,
+          description: row.description,
+          category: row.category,
+          type: type,
+          date: row.date,
+          rawAiInput: row.rawAiInput,
+        ),
+      );
+    }
+    return Success(entities);
   }
 }
