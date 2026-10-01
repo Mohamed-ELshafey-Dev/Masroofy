@@ -3,8 +3,8 @@
 ## Where I Am
 
 - Phase: 1 — Clean Architecture (transactions feature end-to-end)
-- Current topic: Use Cases (Interactors) — one class, one job
-- Last thing I did: Finished Phase 0 (localization AR/EN, core scaffolding, README, LICENSE) and completed the repository layer for transactions
+- Current topic: Domain layer complete — use cases wired into the injectable graph
+- Last thing I did: Renamed Result.Error to Failed, pushed the TransactionType enum through the domain, made the repository return Result, added all three use cases, regenerated the DI graph
 
 ## What I Built So Far
 
@@ -12,26 +12,30 @@
 - [x] Localization infrastructure — app_en.arb + app_ar.arb with generated AppLocalizations classes
 - [x] Core scaffolding — sealed Failure hierarchy, Result<T> type, light/dark theme (#2E7D32), app constants, TransactionType enum
 - [x] Configured core type-safe relational Drift schema (Transactions table)
-- [x] Built pure TransactionEntity domain class (Equatable)
+- [x] Built pure TransactionEntity domain class (Equatable, TransactionType enum)
 - [x] Exposed abstract TransactionRepository contract boundary
 - [x] Implemented concrete TransactionRepositoryImpl registered via @LazySingleton(as: TransactionRepository)
-- [ ] Refactor transaction type from raw String → TransactionType enum across entity, DB column, and repository
-- [ ] Wire Result<T> / Failure into repository boundaries so Use Cases never see raw exceptions
-- [ ] Business logic Use Cases — GetTransactionsUseCase, AddTransactionUseCase, DeleteTransactionUseCase (Next Target)
+- [x] Renamed Error<T> to Failed<T> in Result (no longer shadows dart:core Error)
+- [x] Refactored transaction type from raw String → TransactionType enum, with tryFromString for corrupt rows
+- [x] Repository contract now returns Result — try/catch maps DB errors to DatabaseFailure, bad rows to UnexpectedFailure
+- [x] Business logic Use Cases — GetTransactionsUseCase, AddTransactionUseCase, DeleteTransactionUseCase
+- [x] Regenerated injection.config.dart — three use cases registered as factories
+- [x] AGENT_INSTRUCTIONS.md — conventions, hard rules, and known debt for future agents
+- [ ] Add updateTransaction() and watchTransactions() stream to the repository before the Bloc phase
 - [ ] GitHub Actions CI workflow (deferred from Phase 0)
 
 ## Current File I'm Working On
 
-lib/features/transactions/domain/usecases/get_transactions_usecase.dart (about to create)
+None — Phase 1 domain and data layers are closed. Next file will be lib/features/transactions/domain/repositories/transaction_repository.dart when adding updateTransaction() and watchTransactions().
 
 ## My Last Question
 
-what comes after the repository pattern?
+Does the repository need updateTransaction() and a watchTransactions() stream now, or can that wait until the Bloc phase?
 
 ## What I Was Told
 
-Per the roadmap Phase 1 application plan: complete the transactions feature chain — Entity → Repository contract → RepositoryImpl → GetTransactions/AddTransaction/DeleteTransaction Use Cases — respecting the dependency rule (inner layers never know outer layers), then stop at the architecture skeleton with no UI yet.
+Per the roadmap Phase 1 milestone: complete the transactions chain — Entity → Repository contract → RepositoryImpl → Use Cases — with no UI yet, and keep every layer boundary honest (domain never imports data, repositories never throw).
 
 ## What I'm Trying to Do Right Now
 
-Building the three Use Cases with constructor-injected TransactionRepository, returning Result<T> mapped from Failure types, and registering them in the injectable graph.
+Deciding whether to extend the repository before moving to Phase 2, so the Bloc phase does not force a second visit to the data layer. Known blockers carried forward: AppDatabase cannot be opened against an in-memory database (Phase 6 tests), category is still free text (Phase 3), and Android permissions for Gemini/ML Kit are missing (Phase 4).
