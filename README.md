@@ -30,19 +30,28 @@ Masroofy is a mobile personal finance tracker designed for young Arabs. Type, sp
 | **AI — OCR** | Google ML Kit (on-device) |
 | **Localization** | Flutter l10n (ARB files) — Arabic RTL + English LTR |
 | **Charts** | fl_chart |
-| **Testing** | flutter_test, bloc_test, mockito |
+| **Testing** | flutter_test, bloc_test, hand-written fakes |
+| **Design System** | [DESIGN-apple.md](DESIGN-apple.md) — single source of truth for color |
+
+Color tokens live in `DESIGN-apple.md` and are mirrored into `AppTheme`; change the
+design doc first, then the theme. The design system forbids red/green for
+income vs. expense — sign, icon, and position carry that meaning instead.
 
 ## 🏗 Architecture
+
+Target structure. Only `core/{database,error,theme,utils}`, `l10n`, and the
+transactions `domain` + `data` layers have code today — the roadmap tracks the rest.
 
 ```
 lib/
 ├── core/
-│   ├── database/         # Drift database, tables, DAOs
+│   ├── database/         # Drift database + table definitions
 │   ├── error/            # Failure types, Result<T> sealed class
-│   ├── theme/            # Light + dark ThemeData
+│   ├── theme/            # Light + dark ThemeData (mirrors DESIGN-apple.md)
 │   ├── utils/            # Constants, enums, helpers
 │   ├── ai/               # Gemini API, ML Kit wrappers
 │   └── localization/     # Localization utilities
+├── l10n/                 # ARB files + generated AppLocalizations
 ├── features/
 │   ├── transactions/
 │   │   ├── data/         # Repository implementations, models
@@ -63,21 +72,25 @@ lib/
 │   └── settings/
 │       ├── data/
 │       └── domain/
-├── injection.dart        # DI setup
+├── injection.dart        # DI setup (hand-written registrations)
+├── injection.config.dart # DI graph — generated, do not edit
 └── main.dart             # App entry point
 ```
+
+The transactions repository queries Drift directly; a DAO/service layer is planned
+rather than assumed.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Flutter SDK ≥ 3.12.0
+- Flutter SDK ≥ 3.47.1 (stable)
 - Dart ≥ 3.12.0
 
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/MedoAlshafei/Masroofy.git
-cd masroofy
+git clone https://github.com/Mohamed-ELshafey-Dev/Masroofy.git
+cd Masroofy
 
 # Install dependencies
 flutter pub get
@@ -110,7 +123,7 @@ flutter analyze
 - [x] DI with get_it + injectable
 - [x] Localization setup (Arabic + English)
 - [x] Core scaffolding (error types, theme, constants)
-- [ ] Use Cases (transactions feature)
+- [x] Use Cases (transactions feature) — get, add, delete
 - [ ] Bloc/Cubit state management
 - [ ] Dashboard screen
 - [ ] Quick Add screen (chat-style input)
