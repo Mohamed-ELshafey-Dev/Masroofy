@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/database/app_database.dart';
+import '../../../../core/utils/transaction_type.dart';
 import '../../domain/entities/transaction_entity.dart';
 import '../../domain/repositories/transaction_repository.dart';
 
@@ -22,7 +23,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
             amount: row.amount,
             description: row.description,
             category: row.category,
-            type: row.type,
+            type: TransactionType.fromString(row.type),
             date: row.date,
             rawAiInput: row.rawAiInput,
           ),
@@ -38,7 +39,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
           TransactionsCompanion.insert(
             amount: transaction.amount,
             category: transaction.category,
-            type: transaction.type,
+            type: transaction.type.label,
             date: transaction.date,
             description: Value(transaction.description),
             rawAiInput: Value(transaction.rawAiInput),

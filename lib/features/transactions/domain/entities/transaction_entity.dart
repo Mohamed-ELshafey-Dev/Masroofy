@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/utils/transaction_type.dart';
+
 class TransactionEntity extends Equatable {
   final int? id;
   final double amount;
   final String? description;
   final String category;
-  final String type; // 'expense' or 'income'
+  final TransactionType type;
   final DateTime date;
   final String? rawAiInput;
 

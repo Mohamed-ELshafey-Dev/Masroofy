@@ -21,4 +21,17 @@ enum TransactionType {
       orElse: () => throw ArgumentError('Unknown TransactionType: $value'),
     );
   }
+
+  /// Fallible variant of [fromString] — returns `null` instead of throwing.
+  ///
+  /// WHY: rows read back from SQLite can hold corrupted or legacy values.
+  /// Throwing there turns a data problem into a crash; returning `null` lets
+  /// the data layer report it as a structured failure instead.
+  static TransactionType? tryFromString(String value) {
+    final normalized = value.toLowerCase();
+    for (final type in values) {
+      if (type.name == normalized) return type;
+    }
+    return null;
+  }
 }
