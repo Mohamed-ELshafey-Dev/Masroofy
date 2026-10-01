@@ -14,7 +14,7 @@ import 'failure.dart';
 ///     final data = await repository.getAllTransactions();
 ///     return Success(data);
 ///   } catch (e, s) {
-///     return Error(DatabaseFailure('Failed to load transactions', stackTrace: s));
+///     return Failed(DatabaseFailure('Failed to load transactions', stackTrace: s));
 ///   }
 /// }
 /// ```
@@ -25,7 +25,7 @@ import 'failure.dart';
 /// switch (result) {
 ///   case Success(:final data):
 ///     emit(TransactionsLoaded(data));
-///   case Error(:final failure):
+///   case Failed(:final failure):
 ///     emit(TransactionsError(failure.message));
 /// }
 /// ```
@@ -38,7 +38,11 @@ class Success<T> extends Result<T> {
   const Success(this.data);
 }
 
-class Error<T> extends Result<T> {
+/// WHY named `Failed` and not `Error`?
+/// `Error` shadows `dart:core`'s `Error` class — importing both in one file
+/// forces `core.Error` disambiguation and confuses readers. `Failed` is
+/// unambiguous and pairs with the `Failure` hierarchy it carries.
+class Failed<T> extends Result<T> {
   final Failure failure;
-  const Error(this.failure);
+  const Failed(this.failure);
 }
