@@ -15,6 +15,9 @@ abstract class TransactionRepository {
   /// Persists [transaction] and returns the id of the newly inserted row.
   Future<Result<int>> saveTransaction(TransactionEntity transaction);
 
+  /// Updates the existing transaction identified by `transaction.id`.
+  Future<Result<void>> updateTransaction(TransactionEntity transaction);
+
   /// Deletes the transaction identified by [id].
   Future<Result<void>> deleteTransaction(int id);
 }

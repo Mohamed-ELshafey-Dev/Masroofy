@@ -77,6 +77,48 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
+  Future<Result<void>> updateTransaction(TransactionEntity transaction) async {
+    final id = transaction.id;
+    if (id == null) {
+      return Failed(
+        ValidationFailure('Cannot update a transaction without an id'),
+      );
+    }
+
+    try {
+      // Update writes every mutable column: the entity is the whole truth for
+      // this row, so a field the caller cleared (e.g. an emptied description)
+      // must be overwritten rather than left behind.
+      final changed = await (_db.update(_db.transactions)
+            ..where((t) => t.id.equals(id)))
+          .write(
+        TransactionsCompanion(
+          amount: Value(transaction.amount),
+          category: Value(transaction.category),
+          type: Value(transaction.type.label),
+          date: Value(transaction.date),
+          description: Value(transaction.description),
+          rawAiInput: Value(transaction.rawAiInput),
+        ),
+      );
+
+      // Drift reports the affected row count and does NOT throw when nothing
+      // matched — without this check a deleted row would look like success.
+      if (changed == 0) {
+        return Failed(
+          UnexpectedFailure('No transaction found with id $id'),
+        );
+      }
+
+      return const Success(null);
+    } catch (e, s) {
+      return Failed(
+        DatabaseFailure('Failed to update transaction $id', stackTrace: s),
+      );
+    }
+  }
+
+  @override
   Future<Result<void>> deleteTransaction(int id) async {
     try {
       await (_db.delete(_db.transactions)..where((t) => t.id.equals(id))).go();
