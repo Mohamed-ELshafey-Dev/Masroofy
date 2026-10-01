@@ -17,8 +17,11 @@ class TransactionRepositoryImpl implements TransactionRepository {
   @override
   Future<Result<List<TransactionEntity>>> getAllTransactions() async {
     try {
-      final rows = await _db.select(_db.transactions).get();
-      return _toResult(rows);
+      // Same ordering as watchTransactions() — a one-shot read and the live
+      // stream must never disagree about what "first" means.
+      final query = _db.select(_db.transactions)
+        ..orderBy([(t) => OrderingTerm.desc(t.date)]);
+      return _toResult(await query.get());
     } catch (e, s) {
       return Failed(
         DatabaseFailure('Failed to load transactions', stackTrace: s),

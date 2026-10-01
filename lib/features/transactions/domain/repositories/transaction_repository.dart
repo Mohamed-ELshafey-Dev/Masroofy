@@ -8,8 +8,8 @@ import '../entities/transaction_entity.dart';
 /// - A use case can never silently swallow a database error.
 /// - The UI layer receives a structured [Failure] instead of a raw exception.
 abstract class TransactionRepository {
-  /// Returns every stored transaction, newest information preserved in the
-  /// order the database yields it.
+  /// Returns every stored transaction, newest first — the same order
+  /// [watchTransactions] emits, so a list never reshuffles after a refresh.
   Future<Result<List<TransactionEntity>>> getAllTransactions();
 
   /// Persists [transaction] and returns the id of the newly inserted row.
