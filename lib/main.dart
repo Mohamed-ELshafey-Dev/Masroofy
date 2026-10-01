@@ -18,25 +18,18 @@ class MasroofyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Masroofy',
-
-      // ── Theme ───────────────────────────────────────────────────────
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
 
-      // ── Localization ────────────────────────────────────────────────
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-      ],
+      supportedLocales: const [Locale('en'), Locale('ar')],
 
-      // ── Placeholder home — replaced when we build navigation ──────
       home: const _PlaceholderHome(),
     );
   }
