@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -23,6 +24,8 @@ import 'features/transactions/domain/usecases/delete_transaction_usecase.dart'
     as _i721;
 import 'features/transactions/domain/usecases/get_transactions_usecase.dart'
     as _i666;
+import 'features/transactions/presentation/cubit/transactions_cubit.dart'
+    as _i259;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt init(
@@ -43,6 +46,12 @@ _i174.GetIt init(
   );
   gh.factory<_i666.GetTransactionsUseCase>(
     () => _i666.GetTransactionsUseCase(gh<_i783.TransactionRepository>()),
+  );
+  gh.factory<_i259.TransactionsCubit>(
+    () => _i259.TransactionsCubit(
+      gh<_i666.GetTransactionsUseCase>(),
+      gh<_i721.DeleteTransactionUseCase>(),
+    ),
   );
   return getIt;
 }
