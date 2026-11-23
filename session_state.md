@@ -2,9 +2,9 @@
 
 ## Where I Am
 
-- Phase: 1 — Clean Architecture (transactions feature end-to-end)
-- Current topic: Domain layer complete — use cases wired into the injectable graph
-- Last thing I did: Renamed Result.Error to Failed, pushed the TransactionType enum through the domain, made the repository return Result, added all three use cases, regenerated the DI graph
+- Phase: 2 — Transactions Cubit (state management for the transactions feature)
+- Current topic: TransactionsCubit complete — sealed states, cubit, bloc tests, DI graph updated
+- Last thing I did: Added TransactionsState (sealed, with TransactionsEmpty variant), TransactionsCubit (@injectable factory), 5 bloc_test cases, regenerated injection.config.dart
 
 ## What I Built So Far
 
@@ -21,21 +21,24 @@
 - [x] Business logic Use Cases — GetTransactionsUseCase, AddTransactionUseCase, DeleteTransactionUseCase
 - [x] Regenerated injection.config.dart — three use cases registered as factories
 - [x] AGENT_INSTRUCTIONS.md — conventions, hard rules, and known debt for future agents
-- [ ] Add updateTransaction() and watchTransactions() stream to the repository before the Bloc phase
+- [x] Phase 2 — TransactionsState sealed class (Initial, Loading, Empty, Loaded, Error with Failure)
+- [x] Phase 2 — TransactionsCubit (@injectable factory, maps Result → state, zero business logic)
+- [x] Phase 2 — bloc_test suite (load with data, load empty, load failure, delete reload, delete failure)
+- [x] Phase 2 — Regenerated injection.config.dart with TransactionsCubit factory
 - [ ] GitHub Actions CI workflow (deferred from Phase 0)
 
 ## Current File I'm Working On
 
-None — Phase 1 domain and data layers are closed. Next file will be lib/features/transactions/domain/repositories/transaction_repository.dart when adding updateTransaction() and watchTransactions().
+None — Phase 2 presentation/cubit layer is closed. Next up is Phase 2 presentation UI (Transactions screen / Dashboard widgets) or Phase 3.
 
 ## My Last Question
 
-Does the repository need updateTransaction() and a watchTransactions() stream now, or can that wait until the Bloc phase?
+None — decision on TransactionsEmpty as a separate state was resolved and implemented.
 
 ## What I Was Told
 
-Per the roadmap Phase 1 milestone: complete the transactions chain — Entity → Repository contract → RepositoryImpl → Use Cases — with no UI yet, and keep every layer boundary honest (domain never imports data, repositories never throw).
+Phase 2 milestone: sealed TransactionsState with explicit Empty variant, thin TransactionsCubit that maps Result to state, comprehensive bloc_test coverage. Cubits are factories (not singletons). Failure object stored in Error state (not a formatted string) for localization in Phase 5.
 
 ## What I'm Trying to Do Right Now
 
-Deciding whether to extend the repository before moving to Phase 2, so the Bloc phase does not force a second visit to the data layer. Known blockers carried forward: AppDatabase cannot be opened against an in-memory database (Phase 6 tests), category is still free text (Phase 3), and Android permissions for Gemini/ML Kit are missing (Phase 4).
+Phase 2 TransactionsCubit and state management are complete and tested (18/18 tests green). Awaiting direction on what to tackle next (Transactions UI screen / widgets or categories feature). Known blockers carried forward: AppDatabase cannot be opened against an in-memory database (Phase 6 tests), category is still free text (Phase 3), and Android permissions for Gemini/ML Kit are missing (Phase 4).
