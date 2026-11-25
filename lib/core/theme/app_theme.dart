@@ -1,26 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Masroofy theme configuration — light and dark modes.
-///
-/// WHY define themes in one place?
-/// - Consistency: every screen uses the same colors, typography, spacing.
-/// - Dark mode support: users expect it, especially in MENA markets
-///   where phone screens are used at night.
-/// - Maintainability: change the primary color once → entire app updates.
-/// - Interviewers check for this — ad-hoc colors in widgets = junior code.
-///
-/// Color tokens are mirrored from `DESIGN-apple.md`, which is the single
-/// source of truth for color in this project. Change a value there first,
-/// then mirror it here.
-///
-/// WHY an explicit [ColorScheme] instead of only `colorSchemeSeed`:
-/// Material 3 *generates* tonal values from a seed, so a seed alone can never
-/// produce the exact tokens the design system specifies (`#000000` canvas,
-/// `#1c1c1e` elevated surface). `fromSeed` supplies a sensible full palette
-/// and `copyWith` then pins the tokens that must match exactly.
 abstract final class AppTheme {
-  // ── Brand tokens (DESIGN-apple.md) ──────────────────────────────────────
-
   /// Action blue — the primary on light surfaces.
   static const Color _primaryLight = Color(0xFF0066CC);
 
@@ -43,63 +24,47 @@ abstract final class AppTheme {
   static final ColorScheme _lightScheme = ColorScheme.fromSeed(
     seedColor: _primaryLight,
     brightness: Brightness.light,
-  ).copyWith(
-    primary: _primaryLight,
-    onSurfaceVariant: _inkSecondaryLight,
-  );
+  ).copyWith(primary: _primaryLight, onSurfaceVariant: _inkSecondaryLight);
 
-  static final ColorScheme _darkScheme = ColorScheme.fromSeed(
-    seedColor: _primaryDark,
-    brightness: Brightness.dark,
-  ).copyWith(
-    primary: _primaryDark,
-    surface: _canvasDark,
-    onSurfaceVariant: _inkSecondaryDark,
-  );
+  static final ColorScheme _darkScheme =
+      ColorScheme.fromSeed(
+        seedColor: _primaryDark,
+        brightness: Brightness.dark,
+      ).copyWith(
+        primary: _primaryDark,
+        surface: _canvasDark,
+        onSurfaceVariant: _inkSecondaryDark,
+      );
 
   // ── Light Theme ────────────────────────────────────────────────────────
   static ThemeData get light => ThemeData(
-        useMaterial3: true,
-        colorScheme: _lightScheme,
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0,
-        ),
-        cardTheme: CardThemeData(
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          filled: true,
-        ),
-      );
+    useMaterial3: true,
+    colorScheme: _lightScheme,
+    appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
+    cardTheme: CardThemeData(
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      filled: true,
+    ),
+  );
 
   // ── Dark Theme ─────────────────────────────────────────────────────────
   static ThemeData get dark => ThemeData(
-        useMaterial3: true,
-        colorScheme: _darkScheme,
-        scaffoldBackgroundColor: _canvasDark,
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0,
-        ),
-        cardTheme: CardThemeData(
-          color: _surfaceElevatedDark,
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          filled: true,
-        ),
-      );
+    useMaterial3: true,
+    colorScheme: _darkScheme,
+    scaffoldBackgroundColor: _canvasDark,
+    appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
+    cardTheme: CardThemeData(
+      color: _surfaceElevatedDark,
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      filled: true,
+    ),
+  );
 }
