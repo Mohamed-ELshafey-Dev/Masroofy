@@ -98,5 +98,17 @@
   "@transactionDeleted": { "description": "Snackbar message after deleting a transaction" },
 
   "errorOccurred": "Something went wrong",
-  "@errorOccurred": { "description": "Generic error message" }
+  "@errorOccurred": { "description": "Generic error message" },
+
+  "errorCouldNotComplete": "Couldn't complete that. Please try again.",
+  "@errorCouldNotComplete": { "description": "Generic error message when a database operation fails" },
+
+  "validationAmountNotPositive": "Amount must be greater than zero",
+  "@validationAmountNotPositive": { "description": "Validation message when the transaction amount is zero or negative" },
+
+  "validationCategoryEmpty": "Category cannot be empty",
+  "@validationCategoryEmpty": { "description": "Validation message when the transaction category is blank" },
+
+  "validationInvalidId": "Invalid transaction",
+  "@validationInvalidId": { "description": "Validation message when a transaction id is zero or negative" }
 }

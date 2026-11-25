@@ -106,4 +106,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get errorOccurred => 'حدث خطأ ما';
+
+  @override
+  String get errorCouldNotComplete =>
+      'تعذّر إتمام العملية. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get validationAmountNotPositive => 'يجب أن يكون المبلغ أكبر من صفر';
+
+  @override
+  String get validationCategoryEmpty => 'لا يمكن أن تكون الفئة فارغة';
+
+  @override
+  String get validationInvalidId => 'المعاملة غير صالحة';
 }

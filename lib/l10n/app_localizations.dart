@@ -295,6 +295,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong'**
   String get errorOccurred;
+
+  /// Generic error message when a database operation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t complete that. Please try again.'**
+  String get errorCouldNotComplete;
+
+  /// Validation message when the transaction amount is zero or negative
+  ///
+  /// In en, this message translates to:
+  /// **'Amount must be greater than zero'**
+  String get validationAmountNotPositive;
+
+  /// Validation message when the transaction category is blank
+  ///
+  /// In en, this message translates to:
+  /// **'Category cannot be empty'**
+  String get validationCategoryEmpty;
+
+  /// Validation message when a transaction id is zero or negative
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid transaction'**
+  String get validationInvalidId;
 }
 
 class _AppLocalizationsDelegate

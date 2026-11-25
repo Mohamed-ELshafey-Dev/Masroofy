@@ -40,5 +40,11 @@
   "typeMessage": "اكتب مصروفك...",
   "transactionSaved": "تم حفظ المعاملة!",
   "transactionDeleted": "تم حذف المعاملة",
-  "errorOccurred": "حدث خطأ ما"
+  "errorOccurred": "حدث خطأ ما",
+
+  "errorCouldNotComplete": "تعذّر إتمام العملية. يرجى المحاولة مرة أخرى.",
+
+  "validationAmountNotPositive": "يجب أن يكون المبلغ أكبر من صفر",
+  "validationCategoryEmpty": "لا يمكن أن تكون الفئة فارغة",
+  "validationInvalidId": "المعاملة غير صالحة"
 }

@@ -107,4 +107,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorOccurred => 'Something went wrong';
+
+  @override
+  String get errorCouldNotComplete =>
+      'Couldn\'t complete that. Please try again.';
+
+  @override
+  String get validationAmountNotPositive => 'Amount must be greater than zero';
+
+  @override
+  String get validationCategoryEmpty => 'Category cannot be empty';
+
+  @override
+  String get validationInvalidId => 'Invalid transaction';
 }
