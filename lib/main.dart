@@ -35,8 +35,6 @@ class MasroofyApp extends StatelessWidget {
   }
 }
 
-/// Temporary home screen to verify the setup works.
-/// Will be replaced by the real Dashboard + BottomNavigationBar in Phase 2.
 class _PlaceholderHome extends StatelessWidget {
   const _PlaceholderHome();
 
