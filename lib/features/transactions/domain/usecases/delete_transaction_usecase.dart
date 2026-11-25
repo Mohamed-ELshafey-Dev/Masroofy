@@ -17,7 +17,10 @@ class DeleteTransactionUseCase {
   Future<Result<void>> call(int id) async {
     if (id <= 0) {
       return Failed(
-        ValidationFailure('Invalid transaction id: $id'),
+        ValidationFailure(
+          'Invalid transaction id: $id',
+          code: ValidationCode.invalidId,
+        ),
       );
     }
 

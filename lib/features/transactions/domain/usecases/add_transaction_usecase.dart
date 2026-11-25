@@ -21,13 +21,19 @@ class AddTransactionUseCase {
   Future<Result<int>> call(TransactionEntity transaction) async {
     if (transaction.amount <= 0) {
       return Failed(
-        ValidationFailure('Amount must be greater than zero'),
+        ValidationFailure(
+          'Amount must be greater than zero',
+          code: ValidationCode.amountNotPositive,
+        ),
       );
     }
 
     if (transaction.category.trim().isEmpty) {
       return Failed(
-        ValidationFailure('Category cannot be empty'),
+        ValidationFailure(
+          'Category cannot be empty',
+          code: ValidationCode.categoryEmpty,
+        ),
       );
     }
 
