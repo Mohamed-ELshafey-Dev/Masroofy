@@ -2,9 +2,9 @@
 
 ## Where I Am
 
-- Phase: 2 — Transactions Cubit (state management for the transactions feature)
-- Current topic: TransactionsCubit complete — sealed states, cubit, bloc tests, DI graph updated
-- Last thing I did: Added TransactionsState (sealed, with TransactionsEmpty variant), TransactionsCubit (@injectable factory), 5 bloc_test cases, regenerated injection.config.dart
+- Phase: 2 — Transactions Cubit, with a localization-readiness pass on failures
+- Current topic: Localized failure pipeline — domain returns `ValidationCode`, presentation maps it to en/ar text
+- Last thing I did: gave `ValidationFailure` a required `ValidationCode`, added `FailureLocalizer` + failure keys in both ARBs, localized the `MaterialApp` title, and covered it with tests (23/23 green, `flutter analyze` clean)
 
 ## What I Built So Far
 
@@ -25,15 +25,19 @@
 - [x] Phase 2 — TransactionsCubit (@injectable factory, maps Result → state, zero business logic)
 - [x] Phase 2 — bloc_test suite (load with data, load empty, load failure, delete reload, delete failure)
 - [x] Phase 2 — Regenerated injection.config.dart with TransactionsCubit factory
+- [x] Localization readiness — `ValidationFailure` carries a `ValidationCode` (amount/category/id); use cases return codes, messages stay developer-facing
+- [x] Localization readiness — `FailureLocalizer` extension maps failures to localized en/ar text (`lib/core/localization/failure_localizer.dart`)
+- [x] Localization readiness — failure keys added to both ARBs; `MaterialApp` title localized via `onGenerateTitle`
+- [x] Localization readiness — tests for every validation code + every failure type in both locales
 - [ ] GitHub Actions CI workflow (deferred from Phase 0)
 
 ## Current File I'm Working On
 
-None — Phase 2 presentation/cubit layer is closed. Next up is Phase 2 presentation UI (Transactions screen / Dashboard widgets) or Phase 3.
+None — the failure-localization pass is closed and committed.
 
 ## My Last Question
 
-None — decision on TransactionsEmpty as a separate state was resolved and implemented.
+None — `ValidationFailure` now carries a code; the presentation layer localizes it and never shows `Failure.message`.
 
 ## What I Was Told
 
@@ -41,4 +45,4 @@ Phase 2 milestone: sealed TransactionsState with explicit Empty variant, thin Tr
 
 ## What I'm Trying to Do Right Now
 
-Phase 2 TransactionsCubit and state management are complete and tested (18/18 tests green). Awaiting direction on what to tackle next (Transactions UI screen / widgets or categories feature). Known blockers carried forward: AppDatabase cannot be opened against an in-memory database (Phase 6 tests), category is still free text (Phase 3), and Android permissions for Gemini/ML Kit are missing (Phase 4).
+Localization-readiness pass is complete: 23/23 tests green, `flutter analyze` clean. Next up is Phase 2 presentation UI (Transactions screen / Dashboard widgets) or Phase 3. Known blockers carried forward: AppDatabase cannot be opened against an in-memory database (Phase 6 tests), category is still free text (Phase 3), and Android permissions for Gemini/ML Kit are missing (Phase 4).

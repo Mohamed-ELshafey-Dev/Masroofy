@@ -178,7 +178,6 @@ copy generated code; implement in Flutter on top of the layers above.
 | `AppDatabase` hardcodes its `QueryExecutor` in the constructor → no in-memory DB tests (repository impl is untested) | 6 |
 | `category` is free text; roadmap wants `CategoriesTable` + FK + `BudgetsTable` | 3 |
 | No `MigrationStrategy`; `schemaVersion` is 1 and nothing has shipped yet | 3 |
-| Validation messages in use cases are hardcoded English strings; `ValidationFailure` needs a code/type so the UI can localize | 5 |
 | No Android permissions yet (`INTERNET`, `CAMERA`, `RECORD_AUDIO`); iOS usage descriptions missing | 4 |
 | No GitHub Actions CI workflow (deferred from Phase 0) | 7 |
 | `pubspec.yaml` description is still the Flutter placeholder | 8 |
