@@ -19,8 +19,10 @@ void main() {
       final result = await useCase(0);
 
       switch (result) {
+        case Failed(failure: ValidationFailure(:final code)):
+          expect(code, ValidationCode.invalidId);
         case Failed(:final failure):
-          expect(failure, isA<ValidationFailure>());
+          fail('unexpected failure: ${failure.message}');
         case Success():
           fail('expected a ValidationFailure, got a Success');
       }
@@ -35,8 +37,10 @@ void main() {
       final result = await useCase(-7);
 
       switch (result) {
+        case Failed(failure: ValidationFailure(:final code)):
+          expect(code, ValidationCode.invalidId);
         case Failed(:final failure):
-          expect(failure, isA<ValidationFailure>());
+          fail('unexpected failure: ${failure.message}');
         case Success():
           fail('expected a ValidationFailure, got a Success');
       }

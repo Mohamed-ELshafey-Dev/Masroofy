@@ -24,8 +24,10 @@ void main() {
       final result = await useCase(_entity(amount: 0));
 
       switch (result) {
+        case Failed(failure: ValidationFailure(:final code)):
+          expect(code, ValidationCode.amountNotPositive);
         case Failed(:final failure):
-          expect(failure, isA<ValidationFailure>());
+          fail('unexpected failure: ${failure.message}');
         case Success():
           fail('expected a ValidationFailure, got a Success');
       }
@@ -40,8 +42,10 @@ void main() {
       final result = await useCase(_entity(amount: -12.5));
 
       switch (result) {
+        case Failed(failure: ValidationFailure(:final code)):
+          expect(code, ValidationCode.amountNotPositive);
         case Failed(:final failure):
-          expect(failure, isA<ValidationFailure>());
+          fail('unexpected failure: ${failure.message}');
         case Success():
           fail('expected a ValidationFailure, got a Success');
       }
@@ -52,8 +56,10 @@ void main() {
       final result = await useCase(_entity(category: '   '));
 
       switch (result) {
+        case Failed(failure: ValidationFailure(:final code)):
+          expect(code, ValidationCode.categoryEmpty);
         case Failed(:final failure):
-          expect(failure, isA<ValidationFailure>());
+          fail('unexpected failure: ${failure.message}');
         case Success():
           fail('expected a ValidationFailure, got a Success');
       }
